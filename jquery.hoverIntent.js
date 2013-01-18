@@ -22,6 +22,7 @@
 *	timeout: 0,   // number = milliseconds delay before onMouseOut function call
 *	out: hideNav,    // function = onMouseOut callback (required)
 *	selector: null // string = subSelector for use with delegated event binding. (Like jQuery.on() syntax.)
+*	namespace: 'hoverIntent' // a custom namespace for events attached
 * });
 * 
 * @param  f  onMouseOver function || An object with configuration options
@@ -35,7 +36,8 @@
 			sensitivity: 7,
 			interval: 100,
 			timeout: 0,
-			selector: null
+			selector: null,
+			namespace: 'hoverIntent'
 		};
 		// override configuration options with user supplied object
 		cfg = $.extend(cfg, g ? { over: f, out: g } : f );
@@ -43,7 +45,8 @@
 		// instantiate variables
 		// cX, cY = current X and Y position of mouse, updated by mousemove event
 		// pX, pY = previous X and Y position of mouse, set by mouseover and polling interval
-		var cX, cY, pX, pY;
+		// ns is the namespace to be appended including the '.'
+		var cX, cY, pX, pY, ns = '.' + cfg.namespace;
 
 		// A private function for getting mouse position
 		var track = function(ev) {
@@ -104,10 +107,11 @@
 
 		// bind the function to the two event listeners
 		if(cfg.selector == null) {
-			return this.bind('mouseenter',handleHover).bind('mouseleave',handleHover);
+			
+			return this.bind('mouseenter' + ns,handleHover).bind('mouseleave' + ns,handleHover);
 		}
 		else {
-			return this.on('mouseenter mouseleave', cfg.selector, handleHover);
+			return this.on('mouseenter' + ns + ' mouseleave' + ns, cfg.selector, handleHover);
 		}
 	};
 })(jQuery);

@@ -30,7 +30,14 @@
 			$("#demo3 li").hoverIntent({
 				over: makeTall, 
 				timeout: 500, 
-				out: makeShort
+				out: makeShort,
+				namespace: 'myNamespace'
+			});
+			$("#delegation-container").hoverIntent({
+				over: makeTall, 
+				out: makeShort,
+				selector: '#demo4 li',
+				namespace: 'demo4'
 			});
 		}); // close document.ready
 
@@ -91,6 +98,22 @@
 			<li class="p3">&nbsp;</li>
 			<li class="p4"><span>hoverIntent also ignores over/out events from children</span></li>
 		</ul>
+		
+		<h3>hoverIntent using delegation and namespacing</h3>
+		<pre>$("#delegation-container").hoverIntent({
+	over: makeTall, 
+	out: makeShort,
+	selector: '#demo4 li',
+	namespace: 'demo4'
+})</pre>
+		<div id="delegation-container">
+			<ul class="demo" id="demo4">
+				<li class="p1">&nbsp;</li>
+				<li class="p2">&nbsp;</li>
+				<li class="p3">&nbsp;</li>
+				<li class="p4"><span>hoverIntent also ignores over/out events from children</span></li>
+			</ul>
+		</div>
 		<p>hoverIntent is interchangeable with jQuery's hover. It can use the same exact onMouseOver and onMouseOut functions and it passes the same <strong>this</strong> and <strong>event</strong> objects to those functions.</p>
 	
 
